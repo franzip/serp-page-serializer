@@ -1,0 +1,16 @@
+engine: google
+page_number: 1
+page_url: 'http://www.google.com'
+keyword: baz
+age: '2015-03-19'
+entries:
+    -
+        position: 1
+        url: 'http://www.google.com'
+        title: foo
+        snippet: baz
+    -
+        position: 2
+        url: 'http://www.google.com'
+        title: foo
+        snippet: baz

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<serp_page engine="bing" page_number="5" page_url="http://www.bing.com" keyword="baz" age="2015-03-19">
+  <entry position="1">
+    <url>http://www.bing.com</url>
+    <title>foobaz</title>
+    <snippet>bazfoo</snippet>
+  </entry>
+  <entry position="2">
+    <url>http://www.bing.com</url>
+    <title>bazfoo</title>
+    <snippet>foobazbaz</snippet>
+  </entry>
+</serp_page>

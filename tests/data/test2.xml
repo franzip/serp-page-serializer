@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<serp_page engine="ask" page_number="1" page_url="http://www.ask.com" keyword="foobaz" age="2015-03-19">
+  <entry position="1">
+    <url>http://www.ask.com</url>
+    <title>baz</title>
+    <snippet>foobaz</snippet>
+  </entry>
+  <entry position="2">
+    <url>http://www.ask.com</url>
+    <title>foo</title>
+    <snippet>bazfoo</snippet>
+  </entry>
+</serp_page>

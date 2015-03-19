@@ -1,0 +1,16 @@
+engine: ask
+page_number: 1
+page_url: 'http://www.ask.com'
+keyword: foobaz
+age: '2015-03-19'
+entries:
+    -
+        position: 1
+        url: 'http://www.ask.com'
+        title: baz
+        snippet: foobaz
+    -
+        position: 2
+        url: 'http://www.ask.com'
+        title: foo
+        snippet: bazfoo
