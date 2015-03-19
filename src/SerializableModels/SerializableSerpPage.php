@@ -164,10 +164,11 @@ class SerializableSerpPage
      */
     static private function validEntries($entries)
     {
+        $checkArr = self::$modelArray;
         return is_array($entries) && !empty($entries)
                && array_keys($entries) === range(0, count($entries) - 1)
-               && !in_array(false, array_map(function($arr) {
-                    $diff = array_diff_key(SerializableSerpPage::$modelArray, $arr);
+               && !in_array(false, array_map(function($arr) use ($checkArr) {
+                    $diff = array_diff_key($checkArr, $arr);
                     return empty($diff);
                }, $entries));
     }
