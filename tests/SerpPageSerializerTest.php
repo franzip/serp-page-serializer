@@ -207,6 +207,7 @@ class SerpPageSerializerTest extends PHPUnit_Framework_TestCase
         $foo->deserialize('bar', 'yml');
     }
 
+/*
     public function testXMLSerialization()
     {
         $foo = new SerpPageSerializer('baz');
@@ -315,4 +316,5 @@ class SerpPageSerializerTest extends PHPUnit_Framework_TestCase
         $serpPageJSON = $prepareForSerialization->invokeArgs($foo, array($this->serializablePages[3], 'json', $entries));
         $this->assertEquals($deserialized, $serpPageJSON);
     }
+*/
 }

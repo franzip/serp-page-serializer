@@ -6,10 +6,10 @@ use JMS\Serializer\Annotation\XmlList;
 use JMS\Serializer\Annotation\XmlRoot;
 use JMS\Serializer\Annotation\Type;
 
-
 /**
- * Map a whole Search Engine result page to an easily XML serializable object
- * Each entry is represented by a SerpPageEntryXML object
+ * Map a whole Search Engine result page to an easily XML serializable object.
+ * Each entry is represented by a SerpPageEntryXML object.
+ * @package SerpPageSerializer
  */
 /** @XmlRoot("serp_page") */
 class SerpPageXML

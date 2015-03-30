@@ -1,5 +1,16 @@
 <?php
 
+/**
+ * SerpPageSerializer -- Serialize/deserialize Search Engine Result Pages to
+ * JSON, XML and YAML (JMS/Serializer wrapper).
+ * @version 0.1.0
+ * @author Francesco Pezzella <franzpezzella@gmail.com>
+ * @link https://github.com/franzip/serp-page-serializer
+ * @copyright Copyright 2015 Francesco Pezzella
+ * @license http://www.opensource.org/licenses/mit-license.php MIT License
+ * @package SerpPageSerializer
+ */
+
 namespace Franzip\SerpPageSerializer;
 use JMS\Serializer\SerializerBuilder;
 
@@ -9,6 +20,7 @@ use JMS\Serializer\SerializerBuilder;
  * Serialize/Deserialize Search Engine result page to XML, JSON and YAML.
  * The SerpPageSerializer->serialize() accepts only a SerializableSerpPage as input.
  * YAML deserialization is not currently supported.
+ * @package SerpPageSerializer
  */
 class SerpPageSerializer
 {

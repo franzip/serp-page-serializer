@@ -3,10 +3,10 @@
 namespace Franzip\SerpPageSerializer\SerializableModels;
 use JMS\Serializer\Annotation\Type;
 
-
 /**
- * Map a whole Search Engine result page to an easily JSON serializable object
- * Each entry is represented by a SerpPageEntryJSON object
+ * Map a whole Search Engine result page to an easily JSON serializable object.
+ * Each entry is represented by a SerpPageEntryJSON object.
+ * @package SerpPageSerializer
  */
 class SerpPageJSON
 {

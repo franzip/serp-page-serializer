@@ -181,6 +181,17 @@ var_dump($serpPageJSON);
 
 ```
 
+## TODOs
+
+- [ ] Add a default $cacheDir to constructor.
+- [ ] A decent exceptions system.
+- [ ] Allow typechecking on deserialization by wrapping serialized strings in
+dedicated objects.
+- [ ] Rewrite docs.
+- [ ] Rewrite serialization tests.
+- [ ] YAML deserialization support.
+- [ ] CSV serialization/deserialization support.
+- [ ] Fix messy tests.
+
 ## License
 [MIT](http://opensource.org/licenses/MIT/ "MIT") Public License.
-

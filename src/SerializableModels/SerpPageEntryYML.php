@@ -3,10 +3,10 @@
 namespace Franzip\SerpPageSerializer\SerializableModels;
 use JMS\Serializer\Annotation\Type;
 
-
 /**
- * Map a single Search Engine result page entry to an easily YAML serializable object
- * Each entry has a url, a title and a snippet
+ * Map a single Search Engine result page entry to an easily YAML serializable object.
+ * Each entry has a url, a title and a snippet.
+ * @package SerpPageSerializer
  */
 class SerpPageEntryYML
 {

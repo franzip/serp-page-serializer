@@ -6,10 +6,10 @@ use JMS\Serializer\Annotation\XmlRoot;
 use JMS\Serializer\Annotation\XmlAttribute;
 use JMS\Serializer\Annotation\XmlElement;
 
-
 /**
- * Map a single Search Engine result page entry to an easily XML serializable object
- * Each entry has a url, a title and a snippet
+ * Map a single Search Engine result page entry to an easily XML serializable object.
+ * Each entry has a url, a title and a snippet.
+ * @package SerpPageSerializer
  */
 
 /** @XmlRoot("entry") */

@@ -11,7 +11,9 @@ namespace Franzip\SerpPageSerializer\SerializableModels;
  *       1 => array('url' => 'someurl', 'snippet' => 'somesnippet', 'title => 'sometitle'),
  *       ...)
  *
- * With the array index representing the entry position in the Serp page to serialize.
+ * With the array index representing the entry position starting from 0 in the Serp page to serialize.
+ *
+ * @package SerpPageSerializer
  */
 class SerializableSerpPage
 {
