@@ -27,6 +27,8 @@ class SerpPageSerializer
     // namespace constants
     const SERIALIZABLE_OBJECT_PREFIX = "Franzip\SerpPageSerializer\SerializableModels\SerpPage";
     const SERIALIZABLE_OBJECT_ENTRY  = "Entry";
+    // default cache dir
+    const DEFAULT_SERIALIZER_CACHE_DIR = 'serializer_cache';
     // supported serialization/deserialization formats
     static private $supportedFormatSerialization   = array('xml', 'json', 'yml');
     // JMS/Serializar does not support YAML deserialization
@@ -38,7 +40,7 @@ class SerpPageSerializer
      * Instantiate a SerpPageSerializer
      * @param string $cacheDir
      */
-    public function __construct($cacheDir)
+    public function __construct($cacheDir = self::DEFAULT_SERIALIZER_CACHE_DIR)
     {
         if (!self::validDir($cacheDir))
             throw new \InvalidArgumentException("Please supply a valid folder name");
