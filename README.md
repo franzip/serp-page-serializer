@@ -183,7 +183,7 @@ var_dump($serpPageJSON);
 
 ## TODOs
 
-- [ ] Add a default $cacheDir to constructor.
+- [x] Add a default $cacheDir to constructor.
 - [ ] A decent exceptions system.
 - [ ] Allow typechecking on deserialization by wrapping serialized strings in
 dedicated objects.
