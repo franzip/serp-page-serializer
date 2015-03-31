@@ -3,102 +3,13 @@
 namespace Franzip\SerpPageSerializer\SerpPageSerializer\Test;
 use Franzip\SerpPageSerializer\SerializableModels\SerializableSerpPage;
 use Franzip\SerpPageSerializer\SerpPageSerializer;
+use Franzip\SerpPageSerializer\Helpers\TestHelper;
 use \PHPUnit_Framework_TestCase as PHPUnit_Framework_TestCase;
 
 date_default_timezone_set("Europe/Rome");
 
-class SerpPageSerializerTest extends PHPUnit_Framework_TestCase
+class SerpPageSerializerInvalidArgs extends PHPUnit_Framework_TestCase
 {
-    protected $serializablePages;
-
-    protected function setUp()
-    {
-        mkdir('results');
-        $date = new \DateTime();
-        $date->setTimeStamp(time());
-        $serializablePage1 = new SerializableSerpPage('google', 'baz', 'http://www.google.com',
-                                                      1, $date, array(array(
-                                                      'url' => 'http://www.google.com',
-                                                      'snippet' => 'baz',
-                                                      'title' => 'foo'),
-                                                      array(
-                                                      'url' => 'http://www.google.com',
-                                                      'snippet' => 'baz',
-                                                      'title' => 'foo')));
-        $serializablePage2 = new SerializableSerpPage('ask', 'foobaz', 'http://www.ask.com',
-                                                      1, $date, array(array(
-                                                      'url' => 'http://www.ask.com',
-                                                      'snippet' => 'foobaz',
-                                                      'title' => 'baz'),
-                                                      array(
-                                                      'url' => 'http://www.ask.com',
-                                                      'snippet' => 'bazfoo',
-                                                      'title' => 'foo')));
-        $serializablePage3 = new SerializableSerpPage('bing', 'baz', 'http://www.bing.com',
-                                                      5, $date, array(array(
-                                                      'url' => 'http://www.bing.com',
-                                                      'snippet' => 'bazfoo',
-                                                      'title' => 'foobaz'),
-                                                      array(
-                                                      'url' => 'http://www.bing.com',
-                                                      'snippet' => 'foobazbaz',
-                                                      'title' => 'bazfoo')));
-        $serializablePage4 = new SerializableSerpPage('yahoo', 'baz', 'http://www.yahoo.com',
-                                                      3, $date, array(array(
-                                                      'url' => 'http://www.yahoo.com',
-                                                      'snippet' => 'boom',
-                                                      'title' => 'baz'),
-                                                      array(
-                                                      'url' => 'http://www.yahoo.com',
-                                                      'snippet' => 'bazfo',
-                                                      'title' => 'foobad')));
-        $serializablePages = array($serializablePage1, $serializablePage2,
-                                   $serializablePage3, $serializablePage4);
-        $this->serializablePages = $serializablePages;
-    }
-
-    protected function tearDown()
-    {
-        $this->cleanMess();
-    }
-
-    public function rrmdir($dir)
-    {
-        if (is_dir($dir)) {
-            $objects = scandir($dir);
-            foreach ($objects as $object) {
-                if ($object != "." && $object != "..") {
-                    if (filetype($dir."/".$object) == "dir")
-                        $this->rrmdir($dir."/".$object);
-                    else
-                        unlink($dir."/".$object);
-                }
-            }
-            reset($objects);
-            rmdir($dir);
-        }
-    }
-
-    public function getMethod($name, $className)
-    {
-        $class = new \ReflectionClass($className);
-        $method = $class->getMethod($name);
-        $method->setAccessible(true);
-        return $method;
-    }
-
-    public function cleanMess()
-    {
-        $dir = new \DirectoryIterator(dirname(__FILE__) . DIRECTORY_SEPARATOR . '..');
-        $dontDelete = array('tests', 'src', 'vendor', '.git', 'data');
-        foreach ($dir as $fileinfo) {
-            if ($fileinfo->isDir() && !$fileinfo->isDot()
-                && !in_array($fileinfo->getFileName(), $dontDelete)) {
-                $this->rrmdir($fileinfo->getFilename());
-            }
-        }
-    }
-
     /**
      * @expectedException        InvalidArgumentException
      * @expectedExceptionMessage Please supply a valid folder name
@@ -206,6 +117,87 @@ class SerpPageSerializerTest extends PHPUnit_Framework_TestCase
         $foo = new SerpPageSerializer('baz');
         $foo->deserialize('bar', 'yml');
     }
+}
+
+class SerpPageSerializerTest extends PHPUnit_Framework_TestCase
+{
+    protected $serializablePages;
+
+    protected function setUp()
+    {
+        mkdir('results');
+        $date = new \DateTime();
+        $date->setTimeStamp(time());
+        $serializablePage1 = new SerializableSerpPage(
+                                                'google', 'baz',
+                                                'http://www.google.com',
+                                                1, $date,
+                                                array(
+                                                    array(
+                                                        'url' => 'http://www.google.com',
+                                                        'snippet' => 'baz',
+                                                        'title' => 'foo'),
+                                                    array(
+                                                        'url' => 'http://www.google.com',
+                                                        'snippet' => 'baz',
+                                                        'title' => 'foo')
+                                                ));
+        $serializablePage2 = new SerializableSerpPage(
+                                                'ask', 'foobaz',
+                                                'http://www.ask.com',
+                                                1, $date,
+                                                array(
+                                                    array(
+                                                        'url' => 'http://www.ask.com',
+                                                        'snippet' => 'foobaz',
+                                                        'title' => 'baz'),
+                                                    array(
+                                                        'url' => 'http://www.ask.com',
+                                                        'snippet' => 'bazfoo',
+                                                        'title' => 'foo')
+                                                ));
+        $serializablePage3 = new SerializableSerpPage(
+                                                'bing', 'baz',
+                                                'http://www.bing.com',
+                                                5, $date,
+                                                array(
+                                                    array(
+                                                        'url' => 'http://www.bing.com',
+                                                        'snippet' => 'bazfoo',
+                                                        'title' => 'foobaz'),
+                                                    array(
+                                                        'url' => 'http://www.bing.com',
+                                                        'snippet' => 'foobazbaz',
+                                                        'title' => 'bazfoo')
+                                                ));
+        $serializablePage4 = new SerializableSerpPage(
+                                                'yahoo', 'baz',
+                                                'http://www.yahoo.com',
+                                                3, $date,
+                                                array(
+                                                    array(
+                                                        'url' => 'http://www.yahoo.com',
+                                                        'snippet' => 'boom',
+                                                        'title' => 'baz'),
+                                                    array(
+                                                        'url' => 'http://www.yahoo.com',
+                                                        'snippet' => 'bazfo',
+                                                        'title' => 'foobad')
+                                                ));
+        $serializablePages = array($serializablePage1, $serializablePage2,
+                                   $serializablePage3, $serializablePage4);
+        $this->serializablePages = $serializablePages;
+    }
+
+    protected function tearDown()
+    {
+        TestHelper::cleanMess();
+    }
+
+    public function testDummy()
+    {
+        $this->assertTrue(true);
+    }
 
 /*
     public function testXMLSerialization()
@@ -262,9 +254,9 @@ class SerpPageSerializerTest extends PHPUnit_Framework_TestCase
     public function testXMLDeserialization()
     {
         $foo = new SerpPageSerializer('baz');
-        $createEntries = self::getMethod('createEntries',
+        $createEntries = TestHelper::getMethod('createEntries',
                                          'Franzip\SerpPageSerializer\SerpPageSerializer');
-        $prepareForSerialization = self::getMethod('prepareForSerialization',
+        $prepareForSerialization = TestHelper::getMethod('prepareForSerialization',
                                          'Franzip\SerpPageSerializer\SerpPageSerializer');
         $data = $foo->serialize($this->serializablePages[0], 'xml');
         $deserialized = $foo->deserialize($data, 'xml');
@@ -291,9 +283,9 @@ class SerpPageSerializerTest extends PHPUnit_Framework_TestCase
     public function testJSONDeserialization()
     {
         $foo = new SerpPageSerializer('baz');
-        $createEntries = self::getMethod('createEntries',
+        $createEntries = TestHelper::getMethod('createEntries',
                                          'Franzip\SerpPageSerializer\SerpPageSerializer');
-        $prepareForSerialization = self::getMethod('prepareForSerialization',
+        $prepareForSerialization = TestHelper::getMethod('prepareForSerialization',
                                          'Franzip\SerpPageSerializer\SerpPageSerializer');
         $data = $foo->serialize($this->serializablePages[0], 'json');
         $deserialized = $foo->deserialize($data, 'json');

@@ -23,7 +23,8 @@ class SerializableSerpPageTest extends PHPUnit_Framework_TestCase
      */
     public function testInvalidEngine()
     {
-        $foo = new SerializableSerpPage(0, 'asd', 'foo', 2, $this->date, array('foo'));
+        $foo = new SerializableSerpPage(0, 'asd', 'foo', 2, $this->date,
+                                        array('foo'));
     }
 
     /**
@@ -32,7 +33,8 @@ class SerializableSerpPageTest extends PHPUnit_Framework_TestCase
      */
     public function testInvalidEngine1()
     {
-        $foo = new SerializableSerpPage('', 'asd', 'foo', 2, $this->date, array('foo'));
+        $foo = new SerializableSerpPage('', 'asd', 'foo', 2, $this->date,
+                                        array('foo'));
     }
 
     /**
@@ -41,7 +43,8 @@ class SerializableSerpPageTest extends PHPUnit_Framework_TestCase
      */
     public function testInvalidKeyword()
     {
-        $foo = new SerializableSerpPage('foo', 0, 'foo', 2, $this->date, array('foo'));
+        $foo = new SerializableSerpPage('foo', 0, 'foo', 2, $this->date,
+                                        array('foo'));
     }
 
     /**
@@ -50,7 +53,8 @@ class SerializableSerpPageTest extends PHPUnit_Framework_TestCase
      */
     public function testInvalidKeyword1()
     {
-        $foo = new SerializableSerpPage('foo', '', 'foo', 2, $this->date, array('foo'));
+        $foo = new SerializableSerpPage('foo', '', 'foo', 2, $this->date,
+                                        array('foo'));
     }
 
     /**
@@ -59,7 +63,8 @@ class SerializableSerpPageTest extends PHPUnit_Framework_TestCase
      */
     public function testInvalidUrl()
     {
-        $foo = new SerializableSerpPage('foo', 'baz', 0, 2, $this->date, array('foo'));
+        $foo = new SerializableSerpPage('foo', 'baz', 0, 2, $this->date,
+                                        array('foo'));
     }
 
     /**
@@ -68,7 +73,8 @@ class SerializableSerpPageTest extends PHPUnit_Framework_TestCase
      */
     public function testInvalidUrl1()
     {
-        $foo = new SerializableSerpPage('foo', 'baz', '', 2, $this->date, array('foo'));
+        $foo = new SerializableSerpPage('foo', 'baz', '', 2, $this->date,
+                                        array('foo'));
     }
 
     /**
@@ -86,7 +92,8 @@ class SerializableSerpPageTest extends PHPUnit_Framework_TestCase
      */
     public function testInvalidPageNumber1()
     {
-        $foo = new SerializableSerpPage('foo', 'baz', 'bazfoo', 0, $this->date, array('foo'));
+        $foo = new SerializableSerpPage('foo', 'baz', 'bazfoo', 0, $this->date,
+                                        array('foo'));
     }
 
     /**
@@ -95,7 +102,8 @@ class SerializableSerpPageTest extends PHPUnit_Framework_TestCase
      */
     public function testInvalidAge()
     {
-        $foo = new SerializableSerpPage('foo', 'baz', 'bazfoo', 2, 'foo', array('foo'));
+        $foo = new SerializableSerpPage('foo', 'baz', 'bazfoo', 2, 'foo',
+                                        array('foo'));
     }
 
     /**
@@ -113,7 +121,8 @@ class SerializableSerpPageTest extends PHPUnit_Framework_TestCase
      */
     public function testInvalidAge2()
     {
-        $foo = new SerializableSerpPage('foo', 'baz', 'bazfoo', 2, array('foo'), array('foo'));
+        $foo = new SerializableSerpPage('foo', 'baz', 'bazfoo', 2, array('foo'),
+                                        array('foo'));
     }
 
     /**
@@ -131,7 +140,8 @@ class SerializableSerpPageTest extends PHPUnit_Framework_TestCase
      */
     public function testInvalidEntries()
     {
-        $foo = new SerializableSerpPage('foo', 'baz', 'bazfoo', 2, $this->date, array());
+        $foo = new SerializableSerpPage('foo', 'baz', 'bazfoo', 2, $this->date,
+                                        array());
     }
 
     /**
@@ -140,7 +150,8 @@ class SerializableSerpPageTest extends PHPUnit_Framework_TestCase
      */
     public function testInvalidEntries2()
     {
-        $foo = new SerializableSerpPage('foo', 'baz', 'bazfoo', 2, $this->date, array('urls' => 'foo', 'snippets' => 'bar'));
+        $foo = new SerializableSerpPage('foo', 'baz', 'bazfoo', 2, $this->date,
+                                        array('urls' => 'foo', 'snippets' => 'bar'));
     }
 
     /**
@@ -149,7 +160,8 @@ class SerializableSerpPageTest extends PHPUnit_Framework_TestCase
      */
     public function testInvalidEntries3()
     {
-        $foo = new SerializableSerpPage('foo', 'baz', 'bazfoo', 2, $this->date, array('snippets' => 'bar', 'titles' => 'baz'));
+        $foo = new SerializableSerpPage('foo', 'baz', 'bazfoo', 2, $this->date,
+                                        array('snippets' => 'bar', 'titles' => 'baz'));
     }
 
     /**
@@ -158,7 +170,8 @@ class SerializableSerpPageTest extends PHPUnit_Framework_TestCase
      */
     public function testInvalidEntries4()
     {
-        $foo = new SerializableSerpPage('foo', 'baz', 'bazfoo', 2, $this->date, array(0 => array('url' => 'bar', 'snippet' => 'bar')));
+        $foo = new SerializableSerpPage('foo', 'baz', 'bazfoo', 2, $this->date,
+                                        array(0 => array('url' => 'bar', 'snippet' => 'bar')));
     }
 
     public function testValidObject()

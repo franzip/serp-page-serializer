@@ -1,0 +1,65 @@
+<?php
+
+namespace Franzip\SerpPageSerializer\Helpers;
+
+/**
+ * Namespace useful methods used in tests.
+ * @package  SerpFetcher
+ */
+class TestHelper
+{
+    /**
+     * Recursively remove nested dirs and files in $dir by default.
+     * @param  string  $dir
+     */
+    static public function rrmdir($dir)
+    {
+        if (is_dir($dir)) {
+            $objects = scandir($dir);
+            foreach ($objects as $object) {
+                if ($object != "." && $object != "..") {
+                    if (filetype($dir."/".$object) == "dir")
+                        self::rrmdir($dir."/".$object);
+                    else
+                        unlink($dir."/".$object);
+                }
+            }
+            reset($objects);
+            rmdir($dir);
+        }
+    }
+
+    /**
+     * Clean the filesystem mess created when running tests.
+     * Folders to be left untouched are listed in $dontDelete.
+     */
+    static public function cleanMess()
+    {
+        echo dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' ;
+        $dir = new \DirectoryIterator(dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..');
+        echo $dir;
+        $dontDelete = array('tests', 'src', 'vendor', '.git', 'data');
+        foreach ($dir as $fileinfo) {
+            if ($fileinfo->isDir() && !$fileinfo->isDot()
+                && !in_array($fileinfo->getFileName(), $dontDelete)) {
+                self::rrmdir($fileinfo->getFilename());
+            }
+        }
+    }
+
+    /**
+     * Allow testing private methods.
+     * @param  string $name
+     * @param  string $className
+     * @return callable
+     */
+    static public function getMethod($name, $className)
+    {
+        $class = new \ReflectionClass($className);
+        $method = $class->getMethod($name);
+        $method->setAccessible(true);
+        return $method;
+    }
+
+    private function __constructor() {}
+}
