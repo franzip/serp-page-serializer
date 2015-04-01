@@ -14,7 +14,7 @@
 namespace Franzip\SerpPageSerializer\Models;
 
 /**
- * Basic wrapper around serialized strings.
+ * Simple wrapper around serialized Serp Pages.
  */
 class SerializedSerpPage
 {
@@ -22,10 +22,14 @@ class SerializedSerpPage
 
     /**
      * Wrap a serialized SerpPage into a SerializedSerpPage object.
+     * Only allow SerpPageSerializer class to create a SerializedSerpPage.
      * @param string $content
      */
     public function __construct($content)
     {
+        $trace = debug_backtrace();
+        if ($trace[1]['class'] != 'Franzip\SerpPageSerializer\SerpPageSerializer')
+            throw new \Franzip\SerpPageSerializer\Exceptions\RuntimeException('Cannot instantiate a SerializedSerpPage outside SerpPageSerializer.');
         $this->serializedContent = $content;
     }
 

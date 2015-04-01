@@ -31,7 +31,7 @@ class SerpPageEntryJSON
     private $snippet;
 
     /**
-     * Instatiate a SerpPageEntryJSON
+     * Instatiate a SerpPageEntryJSON.
      * @param int    $position
      * @param string $url
      * @param string $title

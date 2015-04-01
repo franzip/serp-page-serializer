@@ -31,7 +31,7 @@ class SerpPageEntryYML
     private $snippet;
 
     /**
-     * Instatiate a SerpPageEntryYAML
+     * Instatiate a SerpPageEntryYAML.
      * @param int    $position
      * @param string $url
      * @param string $title

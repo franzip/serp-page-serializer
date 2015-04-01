@@ -36,7 +36,7 @@ class SerpPageEntryXML
     private $snippet;
 
     /**
-     * Instatiate a SerpPageEntryXML
+     * Instatiate a SerpPageEntryXML.
      * @param int    $position
      * @param string $url
      * @param string $title
