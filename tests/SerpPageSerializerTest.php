@@ -10,6 +10,28 @@ date_default_timezone_set("Europe/Rome");
 
 class SerializerArgsTest extends PHPUnit_Framework_TestCase
 {
+    protected $serializablePage;
+
+    protected function setUp()
+    {
+        $date = new \DateTime();
+        $date->setTimeStamp(time());
+        $this->serializablePage = new SerializableSerpPage(
+                                                'google', 'baz',
+                                                'http://www.google.com',
+                                                1, $date,
+                                                array(
+                                                    array(
+                                                        'url' => 'http://www.google.com',
+                                                        'snippet' => 'baz',
+                                                        'title' => 'foo'),
+                                                    array(
+                                                        'url' => 'http://www.google.com',
+                                                        'snippet' => 'baz',
+                                                        'title' => 'foo')
+                                                ));
+    }
+
     /**
      * @expectedException        \Franzip\SerpPageSerializer\Exceptions\InvalidArgumentException
      * @expectedExceptionMessage Invalid SerpPageSerializer $cacheDir: please supply a valid non-empty string.
@@ -35,7 +57,7 @@ class SerializerArgsTest extends PHPUnit_Framework_TestCase
     public function testWrongSerializeArgs()
     {
         $foo = new SerpPageSerializer('baz');
-        $foo->serialize($this->serializablePages[0], 'baz');
+        $foo->serialize($this->serializablePage, 'baz');
     }
 
     /**
@@ -45,7 +67,7 @@ class SerializerArgsTest extends PHPUnit_Framework_TestCase
     public function testWrongSerializeArgs1()
     {
         $foo = new SerpPageSerializer('baz');
-        $foo->serialize($this->serializablePages[1], 'baz');
+        $foo->serialize($this->serializablePage, 'baz');
     }
 
     /**
