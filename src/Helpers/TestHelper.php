@@ -4,7 +4,7 @@ namespace Franzip\SerpPageSerializer\Helpers;
 
 /**
  * Namespace useful methods used in tests.
- * @package  SerpFetcher
+ * @package  SerpPageSerializer
  */
 class TestHelper
 {
@@ -35,7 +35,6 @@ class TestHelper
      */
     static public function cleanMess()
     {
-        echo dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' ;
         $dir = new \DirectoryIterator(dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..');
         echo $dir;
         $dontDelete = array('tests', 'src', 'vendor', '.git', 'data');
