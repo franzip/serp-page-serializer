@@ -188,7 +188,7 @@ var_dump($serpPageJSON);
 - [x] Allow typechecking on deserialization by wrapping serialized strings in
  a dedicated class.
 - [x] Fix serialization tests.
-- [ ] Fix deserialization tests.
+- [x] Fix deserialization tests.
 - [ ] Rewrite docs.
 - [ ] YAML deserialization support.
 - [ ] CSV serialization/deserialization support.
