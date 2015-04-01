@@ -11,15 +11,15 @@
  * @package SerpPageSerializer
  */
 
-namespace Franzip\SerpPageSerializer\SerializableModels;
+namespace Franzip\SerpPageSerializer\Models;
 use JMS\Serializer\Annotation\Type;
 
 /**
- * Map a single Search Engine result page entry to an easily YAML serializable object.
+ * Map a single Search Engine result page entry to an easily JSON serializable object.
  * Each entry has a url, a title and a snippet.
  * @package SerpPageSerializer
  */
-class SerpPageEntryYML
+class SerpPageEntryJSON
 {
     /** @Type("integer") */
     private $position;
@@ -31,7 +31,7 @@ class SerpPageEntryYML
     private $snippet;
 
     /**
-     * Instatiate a SerpPageEntryYAML
+     * Instatiate a SerpPageEntryJSON
      * @param int    $position
      * @param string $url
      * @param string $title

@@ -37,7 +37,7 @@ class SerpPageSerializerHelper
      */
     static public function serializablePage($object)
     {
-        return is_a($object, "Franzip\SerpPageSerializer\SerializableModels\SerializableSerpPage");
+        return is_a($object, "Franzip\SerpPageSerializer\Models\SerializableSerpPage");
     }
 
     /**

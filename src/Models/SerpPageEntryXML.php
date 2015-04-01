@@ -11,27 +11,32 @@
  * @package SerpPageSerializer
  */
 
-namespace Franzip\SerpPageSerializer\SerializableModels;
+namespace Franzip\SerpPageSerializer\Models;
 use JMS\Serializer\Annotation\Type;
+use JMS\Serializer\Annotation\XmlRoot;
+use JMS\Serializer\Annotation\XmlAttribute;
+use JMS\Serializer\Annotation\XmlElement;
 
 /**
- * Map a single Search Engine result page entry to an easily JSON serializable object.
+ * Map a single Search Engine result page entry to an easily XML serializable object.
  * Each entry has a url, a title and a snippet.
  * @package SerpPageSerializer
  */
-class SerpPageEntryJSON
+
+/** @XmlRoot("entry") */
+class SerpPageEntryXML
 {
-    /** @Type("integer") */
+    /** @XmlAttribute @Type("integer") */
     private $position;
-    /** @Type("string") */
+    /** @XmlElement(cdata=false) @Type("string") */
     private $url;
-    /** @Type("string") */
+    /** @XmlElement(cdata=false) @Type("string") */
     private $title;
-    /** @Type("string") */
+    /** @XmlElement(cdata=false) @Type("string") */
     private $snippet;
 
     /**
-     * Instatiate a SerpPageEntryJSON
+     * Instatiate a SerpPageEntryXML
      * @param int    $position
      * @param string $url
      * @param string $title

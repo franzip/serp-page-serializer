@@ -11,15 +11,15 @@
  * @package SerpPageSerializer
  */
 
-namespace Franzip\SerpPageSerializer\SerializableModels;
+namespace Franzip\SerpPageSerializer\Models;
 use JMS\Serializer\Annotation\Type;
 
 /**
- * Map a whole Search Engine result page to an easily JSON serializable object.
- * Each entry is represented by a SerpPageEntryJSON object.
+ * Map a whole Search Engine result page to an easily YAML serializable object.
+ * Each entry is represented by a SerpPageEntryYML object.
  * @package SerpPageSerializer
  */
-class SerpPageJSON
+class SerpPageYML
 {
     /** @Type("string") */
     private $engine;
@@ -31,11 +31,11 @@ class SerpPageJSON
     private $keyword;
     /** @Type("DateTime<'Y-m-d'>") */
     private $age;
-    /** @Type("array<Franzip\SerpPageSerializer\SerializableModels\SerpPageEntryJSON>") */
+    /** @Type("array<Franzip\SerpPageSerializer\Models\SerpPageEntryYML>") */
     private $entries;
 
     /**
-     * Instantiate a SerpPageJSON object.
+     * Instantiate a SerpPageYAML object.
      * @param string   $engine
      * @param int      $pageNumber
      * @param string   $keyword

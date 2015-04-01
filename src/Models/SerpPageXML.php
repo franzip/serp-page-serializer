@@ -11,33 +11,38 @@
  * @package SerpPageSerializer
  */
 
-namespace Franzip\SerpPageSerializer\SerializableModels;
+namespace Franzip\SerpPageSerializer\Models;
+use JMS\Serializer\Annotation\XmlAttribute;
+use JMS\Serializer\Annotation\XmlList;
+use JMS\Serializer\Annotation\XmlRoot;
 use JMS\Serializer\Annotation\Type;
 
 /**
- * Map a whole Search Engine result page to an easily YAML serializable object.
- * Each entry is represented by a SerpPageEntryYML object.
+ * Map a whole Search Engine result page to an easily XML serializable object.
+ * Each entry is represented by a SerpPageEntryXML object.
  * @package SerpPageSerializer
  */
-class SerpPageYML
+/** @XmlRoot("serp_page") */
+class SerpPageXML
 {
-    /** @Type("string") */
+    /** @XmlAttribute @Type("string") */
     private $engine;
-    /** @Type("integer") */
+    /** @XmlAttribute @Type("integer") */
     private $pageNumber;
-    /** @Type("string") */
+    /** @XmlAttribute @Type("string") */
     private $pageUrl;
-    /** @Type("string") */
+    /** @XmlAttribute @Type("string") */
     private $keyword;
-    /** @Type("DateTime<'Y-m-d'>") */
+    /** @XmlAttribute @Type("DateTime<'Y-m-d'>") */
     private $age;
-    /** @Type("array<Franzip\SerpPageSerializer\SerializableModels\SerpPageEntryYML>") */
+    /** @XmlList(inline = true, entry = "entry") @Type("array<Franzip\SerpPageSerializer\Models\SerpPageEntryXML>") */
     private $entries;
 
     /**
-     * Instantiate a SerpPageYAML object.
+     * Instantiate a SerpPageXML object.
      * @param string   $engine
      * @param int      $pageNumber
+     * @param string   $pageUrl
      * @param string   $keyword
      * @param DateTime $age
      * @param array    $entries

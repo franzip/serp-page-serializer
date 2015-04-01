@@ -26,7 +26,7 @@ use JMS\Serializer\SerializerBuilder;
 class SerpPageSerializer
 {
     // namespace constants
-    const SERIALIZABLE_OBJECT_PREFIX = "Franzip\SerpPageSerializer\SerializableModels\SerpPage";
+    const SERIALIZABLE_OBJECT_PREFIX = "Franzip\SerpPageSerializer\Models\SerpPage";
     const SERIALIZABLE_OBJECT_ENTRY  = "Entry";
     // default cache dir
     const DEFAULT_SERIALIZER_CACHE_DIR = 'serializer_cache';

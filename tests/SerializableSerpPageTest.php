@@ -1,7 +1,7 @@
 <?php
 
-namespace Franzip\SerpPageSerializer\SerializableModels\SerializableSerpPage\Test;
-use Franzip\SerpPageSerializer\SerializableModels\SerializableSerpPage;
+namespace Franzip\SerpPageSerializer\Models\SerializableSerpPage\Test;
+use Franzip\SerpPageSerializer\Models\SerializableSerpPage;
 use \PHPUnit_Framework_TestCase as PHPUnit_Framework_TestCase;
 
 date_default_timezone_set("Europe/Rome");

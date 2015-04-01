@@ -1,7 +1,7 @@
 <?php
 
 namespace Franzip\SerpPageSerializer\SerpPageSerializer\Test;
-use Franzip\SerpPageSerializer\SerializableModels\SerializableSerpPage;
+use Franzip\SerpPageSerializer\Models\SerializableSerpPage;
 use Franzip\SerpPageSerializer\SerpPageSerializer;
 use Franzip\SerpPageSerializer\Helpers\TestHelper;
 use \PHPUnit_Framework_TestCase as PHPUnit_Framework_TestCase;

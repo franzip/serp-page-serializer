@@ -11,7 +11,7 @@
  * @package SerpPageSerializer
  */
 
-namespace Franzip\SerpPageSerializer\SerializableModels;
+namespace Franzip\SerpPageSerializer\Models;
 use Franzip\SerpPageSerializer\Helpers\SerializableSerpPageHelper;
 
 /**
