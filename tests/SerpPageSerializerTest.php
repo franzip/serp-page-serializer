@@ -8,11 +8,11 @@ use \PHPUnit_Framework_TestCase as PHPUnit_Framework_TestCase;
 
 date_default_timezone_set("Europe/Rome");
 
-class SerpPageSerializerInvalidArgs extends PHPUnit_Framework_TestCase
+class SerializerArgsTest extends PHPUnit_Framework_TestCase
 {
     /**
-     * @expectedException        InvalidArgumentException
-     * @expectedExceptionMessage Please supply a valid folder name
+     * @expectedException        \Franzip\SerpPageSerializer\Exceptions\InvalidArgumentException
+     * @expectedExceptionMessage Invalid SerpPageSerializer $cacheDir: please supply a valid non-empty string.
      */
     public function testInvalidArguments()
     {
@@ -20,8 +20,8 @@ class SerpPageSerializerInvalidArgs extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException        InvalidArgumentException
-     * @expectedExceptionMessage Please supply a valid folder name
+     * @expectedException        \Franzip\SerpPageSerializer\Exceptions\InvalidArgumentException
+     * @expectedExceptionMessage Invalid SerpPageSerializer $cacheDir: please supply a valid non-empty string.
      */
     public function testInvalidArguments1()
     {
@@ -29,8 +29,8 @@ class SerpPageSerializerInvalidArgs extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException        InvalidArgumentException
-     * @expectedExceptionMessage Invalid format.
+     * @expectedException        \Franzip\SerpPageSerializer\Exceptions\UnsupportedSerializationFormatException
+     * @expectedExceptionMessage Invalid SerpPageSerializer $format: supported serialization formats are JSON, XML and YAML.
      */
     public function testWrongSerializeArgs()
     {
@@ -39,8 +39,8 @@ class SerpPageSerializerInvalidArgs extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException        InvalidArgumentException
-     * @expectedExceptionMessage Invalid format.
+     * @expectedException        \Franzip\SerpPageSerializer\Exceptions\UnsupportedSerializationFormatException
+     * @expectedExceptionMessage Invalid SerpPageSerializer $format: supported serialization formats are JSON, XML and YAML.
      */
     public function testWrongSerializeArgs1()
     {
@@ -49,8 +49,8 @@ class SerpPageSerializerInvalidArgs extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException        InvalidArgumentException
-     * @expectedExceptionMessage You must supply a SerializableSerpPage object.
+     * @expectedException        \Franzip\SerpPageSerializer\Exceptions\NonSerializableObjectException
+     * @expectedExceptionMessage Invalid SerpPageSerializer $serializablePage: you must supply a SerializableSerpPage object to serialize.
      */
     public function testWrongSerializeArgs2()
     {
@@ -59,8 +59,8 @@ class SerpPageSerializerInvalidArgs extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException        InvalidArgumentException
-     * @expectedExceptionMessage You must supply a SerializableSerpPage object.
+     * @expectedException        \Franzip\SerpPageSerializer\Exceptions\NonSerializableObjectException
+     * @expectedExceptionMessage Invalid SerpPageSerializer $serializablePage: you must supply a SerializableSerpPage object to serialize.
      */
     public function testWrongSerializeArgs3()
     {
@@ -69,8 +69,8 @@ class SerpPageSerializerInvalidArgs extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException        InvalidArgumentException
-     * @expectedExceptionMessage Invalid format.
+     * @expectedException        \Franzip\SerpPageSerializer\Exceptions\UnsupportedDeserializationFormatException
+     * @expectedExceptionMessage Invalid SerpPageSerializer $format: supported deserialization formats are JSON and YAML.
      */
     public function testWrongDeserializeArgs()
     {
@@ -79,8 +79,8 @@ class SerpPageSerializerInvalidArgs extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException        InvalidArgumentException
-     * @expectedExceptionMessage Invalid format.
+     * @expectedException        \Franzip\SerpPageSerializer\Exceptions\UnsupportedDeserializationFormatException
+     * @expectedExceptionMessage Invalid SerpPageSerializer $format: supported deserialization formats are JSON and YAML.
      */
     public function testWrongDeserializeArgs1()
     {
@@ -109,8 +109,8 @@ class SerpPageSerializerInvalidArgs extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException        InvalidArgumentException
-     * @expectedExceptionMessage Invalid format.
+     * @expectedException        \Franzip\SerpPageSerializer\Exceptions\UnsupportedDeserializationFormatException
+     * @expectedExceptionMessage Invalid SerpPageSerializer $format: supported deserialization formats are JSON and YAML.
      */
     public function testWrongDeserializeArgs4()
     {
@@ -119,7 +119,7 @@ class SerpPageSerializerInvalidArgs extends PHPUnit_Framework_TestCase
     }
 }
 
-class SerpPageSerializerTest extends PHPUnit_Framework_TestCase
+class SerializerTest extends PHPUnit_Framework_TestCase
 {
     protected $serializablePages;
 

@@ -12,6 +12,7 @@
  */
 
 namespace Franzip\SerpPageSerializer;
+use Franzip\SerpPageSerializer\Helpers\SerpPageSerializerHelper;
 use JMS\Serializer\SerializerBuilder;
 
 \Doctrine\Common\Annotations\AnnotationRegistry::registerLoader('class_exists');
@@ -30,9 +31,9 @@ class SerpPageSerializer
     // default cache dir
     const DEFAULT_SERIALIZER_CACHE_DIR = 'serializer_cache';
     // supported serialization/deserialization formats
-    static private $supportedFormatSerialization   = array('xml', 'json', 'yml');
+    private static $supportedFormatSerialization   = array('xml', 'json', 'yml');
     // JMS/Serializar does not support YAML deserialization
-    static private $supportedFormatDeserialization = array('xml', 'json');
+    private static $supportedFormatDeserialization = array('xml', 'json');
     // underlying serializer instance (a JMS/Serializer object)
     private $serializer;
 
@@ -42,8 +43,8 @@ class SerpPageSerializer
      */
     public function __construct($cacheDir = self::DEFAULT_SERIALIZER_CACHE_DIR)
     {
-        if (!self::validDir($cacheDir))
-            throw new \InvalidArgumentException("Please supply a valid folder name");
+        if (!SerpPageSerializerHelper::validateDir($cacheDir))
+            throw new \Franzip\SerpPageSerializer\Exceptions\InvalidArgumentException('Invalid SerpPageSerializer $cacheDir: please supply a valid non-empty string.');
         $this->serializer = SerializerBuilder::create()->setCacheDir($cacheDir)->build();
     }
 
@@ -55,19 +56,23 @@ class SerpPageSerializer
      */
     public function serialize($serializablePage, $format)
     {
-        if (!self::validSerializationFormat($format))
-            throw new \InvalidArgumentException('Invalid format.');
-        if (!self::serializablePage($serializablePage))
-            throw new \InvalidArgumentException('You must supply a SerializableSerpPage object.');
+        // check if supported serialization format
+        if (!SerpPageSerializerHelper::validFormat($format, self::$supportedFormatSerialization))
+            throw new \Franzip\SerpPageSerializer\Exceptions\UnsupportedSerializationFormatException('Invalid SerpPageSerializer $format: supported serialization formats are JSON, XML and YAML.');
+        // typecheck the object to serialize
+        if (!SerpPageSerializerHelper::serializablePage($serializablePage))
+            throw new \Franzip\SerpPageSerializer\Exceptions\NonSerializableObjectException('Invalid SerpPageSerializer $serializablePage: you must supply a SerializableSerpPage object to serialize.');
+
         $format           = strtolower($format);
         $entries          = $this->createEntries($serializablePage, $format);
         $serializablePage = $this->prepareForSerialization($serializablePage, $format, $entries);
         $serializedPage   = $this->getSerializer()->serialize($serializablePage, $format);
         // beautify output if JSON
-        return ($format == 'json') ? $this->prettyJSON($serializedPage) : $serializedPage;
+        return ($format == 'json') ? SerpPageSerializerHelper::prettyJSON($serializedPage) : $serializedPage;
     }
 
     /**
+     * TOCHANGE
      * Deserialize a serialized page.
      * YAML deserialization is not currently supported
      * @param  string $serializedPage
@@ -76,8 +81,10 @@ class SerpPageSerializer
      */
     public function deserialize($serializedPage, $format)
     {
-        if (!self::validDeserializationFormat($format))
-            throw new \InvalidArgumentException('Invalid format.');
+        // check if supported deserialization format
+        if (!SerpPageSerializerHelper::validFormat($format, self::$supportedFormatDeserialization))
+            throw new \Franzip\SerpPageSerializer\Exceptions\UnsupportedDeserializationFormatException('Invalid SerpPageSerializer $format: supported deserialization formats are JSON and YAML.');
+        // TODO: typecheck object
         if (!self::deserializablePage($serializedPage))
             throw new \InvalidArgumentException('Something went wrong. Check your arguments.');
         $targetClass = self::SERIALIZABLE_OBJECT_PREFIX . strtoupper($format);
@@ -144,20 +151,10 @@ class SerpPageSerializer
         $formatName = strtoupper($format);
         $className  = self::SERIALIZABLE_OBJECT_PREFIX;
         if ($entry)
-            $className  .= self::SERIALIZABLE_OBJECT_ENTRY;
+            $className .= self::SERIALIZABLE_OBJECT_ENTRY;
         $className .= $formatName;
         return call_user_func_array(array(new \ReflectionClass($className), 'newInstance'),
                                     $args);
-    }
-
-    /**
-     * The object to serialize must be an instance of SerializableSerpPage
-     * @param  SerializableSerpPage $object
-     * @return bool
-     */
-    private static function serializablePage($object)
-    {
-        return is_a($object, "Franzip\SerpPageSerializer\SerializableModels\SerializableSerpPage");
     }
 
     /**
@@ -169,93 +166,5 @@ class SerpPageSerializer
     private static function deserializablePage($page)
     {
         return is_string($page) && !empty($page);
-    }
-
-    /**
-     * JMS/Serializer does not beautify JSON output, so do it.
-     * @param  string $json
-     * @return string
-     */
-    private function prettyJSON($json) {
-
-        $result      = '';
-        $pos         = 0;
-        $strLen      = strlen($json);
-        $indentStr   = '  ';
-        $newLine     = "\n";
-        $prevChar    = '';
-        $outOfQuotes = true;
-
-        for ($i=0; $i<=$strLen; $i++) {
-
-            // Grab the next character in the string.
-            $char = substr($json, $i, 1);
-
-            // Are we inside a quoted string?
-            if ($char == '"' && $prevChar != '\\') {
-                $outOfQuotes = !$outOfQuotes;
-
-            // If this character is the end of an element,
-            // output a new line and indent the next line.
-            } else if(($char == '}' || $char == ']') && $outOfQuotes) {
-                $result .= $newLine;
-                $pos --;
-                for ($j=0; $j<$pos; $j++) {
-                    $result .= $indentStr;
-                }
-            }
-
-            // Add the character to the result string.
-            $result .= $char;
-
-            // If the last character was the beginning of an element,
-            // output a new line and indent the next line.
-            if (($char == ',' || $char == '{' || $char == '[') && $outOfQuotes) {
-                $result .= $newLine;
-                if ($char == '{' || $char == '[') {
-                    $pos ++;
-                }
-
-                for ($j = 0; $j < $pos; $j++) {
-                    $result .= $indentStr;
-                }
-            }
-
-            $prevChar = $char;
-        }
-
-        return $result;
-    }
-
-    /**
-     * Check if the serialization format is supported
-     * @param  string $format
-     * @return bool
-     */
-    private static function validSerializationFormat($format)
-    {
-        return is_string($format)
-               && in_array(strtolower($format), self::$supportedFormatSerialization);
-    }
-
-    /**
-     * Check if the deserialization format is supported
-     * @param  string $format
-     * @return bool
-     */
-    private static function validDeserializationFormat($format)
-    {
-        return is_string($format)
-               && in_array(strtolower($format), self::$supportedFormatDeserialization);
-    }
-
-    /**
-     * Basic validation for the constructor.
-     * @param  string $cacheDir
-     * @return bool
-     */
-    private static function validDir($cacheDir)
-    {
-        return is_string($cacheDir) && !empty($cacheDir);
     }
 }
