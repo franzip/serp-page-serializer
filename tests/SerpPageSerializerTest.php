@@ -149,7 +149,9 @@ class SerializerTest extends PHPUnit_Framework_TestCase
     {
         mkdir('results');
         $date = new \DateTime();
-        $date->setTimeStamp(time());
+        // mock time
+        $date->setTimeStamp(strtotime('2015-03-19'));
+        $date->format('Y-m-d');
         $serializablePage1 = new SerializableSerpPage(
                                                 'google', 'baz',
                                                 'http://www.google.com',
@@ -216,12 +218,6 @@ class SerializerTest extends PHPUnit_Framework_TestCase
         TestHelper::cleanMess();
     }
 
-    public function testDummy()
-    {
-        $this->assertTrue(true);
-    }
-
-/*
     public function testXMLSerialization()
     {
         $foo = new SerpPageSerializer('baz');
@@ -273,13 +269,14 @@ class SerializerTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($fixtureData, $resultData);
     }
 
+    /*
     public function testXMLDeserialization()
     {
         $foo = new SerpPageSerializer('baz');
         $createEntries = TestHelper::getMethod('createEntries',
-                                         'Franzip\SerpPageSerializer\SerpPageSerializer');
+                                               'Franzip\SerpPageSerializer\SerpPageSerializer');
         $prepareForSerialization = TestHelper::getMethod('prepareForSerialization',
-                                         'Franzip\SerpPageSerializer\SerpPageSerializer');
+                                                         'Franzip\SerpPageSerializer\SerpPageSerializer');
         $data = $foo->serialize($this->serializablePages[0], 'xml');
         $deserialized = $foo->deserialize($data, 'xml');
         $entries = $createEntries->invokeArgs($foo, array($this->serializablePages[0], 'xml'));
@@ -330,5 +327,5 @@ class SerializerTest extends PHPUnit_Framework_TestCase
         $serpPageJSON = $prepareForSerialization->invokeArgs($foo, array($this->serializablePages[3], 'json', $entries));
         $this->assertEquals($deserialized, $serpPageJSON);
     }
-*/
+    */
 }
