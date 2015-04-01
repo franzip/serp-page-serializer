@@ -13,7 +13,7 @@ class SerpPageSerializerHelper
      * @param  string $cacheDir
      * @return bool
      */
-    static public function validateDir($cacheDir)
+    public static function validateDir($cacheDir)
     {
         return is_string($cacheDir) && !empty($cacheDir);
     }
@@ -24,7 +24,7 @@ class SerpPageSerializerHelper
      * @param  array  $validFormats
      * @return bool
      */
-    static public function validFormat($format, $validFormats)
+    public static function validFormat($format, $validFormats)
     {
         return is_string($format)
                && in_array(strtolower($format), $validFormats);
@@ -35,9 +35,19 @@ class SerpPageSerializerHelper
      * @param  SerializableSerpPage $object
      * @return bool
      */
-    static public function serializablePage($object)
+    public static function serializablePage($object)
     {
         return is_a($object, "Franzip\SerpPageSerializer\Models\SerializableSerpPage");
+    }
+
+    /**
+     * Check if a supplied object is deserializable.
+     * @param  SerializedSerpPage $serializedPage
+     * @return bool
+     */
+    public static function deserializablePage($serializedPage)
+    {
+        return is_a($serializedPage, "Franzip\SerpPageSerializer\Models\SerializedSerpPage");
     }
 
     /**
@@ -45,7 +55,7 @@ class SerpPageSerializerHelper
      * @param  string $json
      * @return string
      */
-    static public function prettyJSON($json) {
+    public static function prettyJSON($json) {
 
         $result      = '';
         $pos         = 0;
