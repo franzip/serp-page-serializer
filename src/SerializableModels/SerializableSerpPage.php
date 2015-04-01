@@ -1,6 +1,7 @@
 <?php
 
 namespace Franzip\SerpPageSerializer\SerializableModels;
+use Franzip\SerpPageSerializer\SerializableModels\SerializableSerpPageHelper;
 
 /**
  * Provide a convenient data abstraction for SerpPageSerializer class.
@@ -17,8 +18,6 @@ namespace Franzip\SerpPageSerializer\SerializableModels;
  */
 class SerializableSerpPage
 {
-    // allow entries array structure validation
-    static private $modelArray = array("url" => 0, "snippet" => 0, "title" => 0);
     // search engine vendor
     private $engine;
     // keyword associated to the search engine page
@@ -33,7 +32,7 @@ class SerializableSerpPage
     private $entries;
 
     /**
-     * Construct a SerializableSerpPage object
+     * Construct a SerializableSerpPage object.
      * @param string   $engine
      * @param string   $keyword
      * @param string   $pageUrl
@@ -44,9 +43,9 @@ class SerializableSerpPage
     public function __construct($engine, $keyword, $pageUrl, $pageNumber,
                                 $age, $entries)
     {
-        if (!self::validateData($engine, $keyword, $pageUrl, $pageNumber,
-                                $age, $entries))
-            throw new \InvalidArgumentException("Please check the supplied arguments and try again");
+        // perform validations
+        SerializableSerpPageHelper::validateData($engine, $keyword, $pageUrl,
+                                                 $pageNumber, $age, $entries);
 
         $this->engine     = $engine;
         $this->keyword    = $keyword;
@@ -57,7 +56,7 @@ class SerializableSerpPage
     }
 
     /**
-     * Get the engine vendor
+     * Get the engine vendor.
      * @return string
      */
     public function getEngine()
@@ -66,7 +65,7 @@ class SerializableSerpPage
     }
 
     /**
-     * Get the keyword
+     * Get the keyword.
      * @return string
      */
     public function getKeyword()
@@ -75,7 +74,7 @@ class SerializableSerpPage
     }
 
     /**
-     * Get the page Url
+     * Get the page Url.
      * @return string
      */
     public function getPageUrl()
@@ -84,7 +83,7 @@ class SerializableSerpPage
     }
 
     /**
-     * Get the page number
+     * Get the page number.
      * @return int
      */
     public function getPageNumber()
@@ -93,7 +92,7 @@ class SerializableSerpPage
     }
 
     /**
-     * Get the age
+     * Get the age.
      * @return DateTime
      */
     public function getAge()
@@ -102,7 +101,7 @@ class SerializableSerpPage
     }
 
     /**
-     * Get the entries array
+     * Get the entries array.
      * @return array
      */
     public function getEntries()
@@ -111,7 +110,7 @@ class SerializableSerpPage
     }
 
     /**
-     * Dump object data
+     * Dump object data.
      * @return return
      */
     public function dumpObject()
@@ -134,44 +133,5 @@ class SerializableSerpPage
             $string .= "        Snippet: $snippet\n";
         }
         return $string;
-    }
-
-    /**
-     * Validate constructor data
-     * @param  string   $engine
-     * @param  string   $keyword
-     * @param  string   $pageUrl
-     * @param  int      $pageNumber
-     * @param  DateTime $age
-     * @param  array    $entries
-     * @return bool
-     */
-    static private function validateData($engine, $keyword, $pageUrl, $pageNumber,
-                                         $age, $entries)
-    {
-        return is_string($engine) && !empty($engine) && is_string($keyword)
-               && !empty($keyword) && is_string($pageUrl) && !empty($pageUrl)
-               && is_int($pageNumber) && $pageNumber > 0 && is_a($age, 'DateTime')
-               && self::validEntries($entries);
-    }
-
-    /**
-     * Check entries array structure.
-     * The entries array must have the following structure:
-     * array(0 => array('url' => 'someurl', 'snippet' => 'somesnippet', 'title => 'sometitle'),
-     *       1 => array('url' => 'someurl', 'snippet' => 'somesnippet', 'title => 'sometitle'),
-     *       ...)
-     * @param  array  $entries
-     * @return bool
-     */
-    static private function validEntries($entries)
-    {
-        $checkArr = self::$modelArray;
-        return is_array($entries) && !empty($entries)
-               && array_keys($entries) === range(0, count($entries) - 1)
-               && !in_array(false, array_map(function($arr) use ($checkArr) {
-                    $diff = array_diff_key($checkArr, $arr);
-                    return empty($diff);
-               }, $entries));
     }
 }
