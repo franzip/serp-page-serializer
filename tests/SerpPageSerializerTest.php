@@ -92,7 +92,7 @@ class SerializerArgsTest extends PHPUnit_Framework_TestCase
 
     /**
      * @expectedException        \Franzip\SerpPageSerializer\Exceptions\UnsupportedDeserializationFormatException
-     * @expectedExceptionMessage Invalid SerpPageSerializer $format: supported deserialization formats are JSON and YAML.
+     * @expectedExceptionMessage Invalid SerpPageSerializer $format: supported deserialization formats are JSON and XML.
      */
     public function testWrongDeserializeArgs()
     {
@@ -102,7 +102,7 @@ class SerializerArgsTest extends PHPUnit_Framework_TestCase
 
     /**
      * @expectedException        \Franzip\SerpPageSerializer\Exceptions\UnsupportedDeserializationFormatException
-     * @expectedExceptionMessage Invalid SerpPageSerializer $format: supported deserialization formats are JSON and YAML.
+     * @expectedExceptionMessage Invalid SerpPageSerializer $format: supported deserialization formats are JSON and XML.
      */
     public function testWrongDeserializeArgs1()
     {
@@ -111,8 +111,8 @@ class SerializerArgsTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException        InvalidArgumentException
-     * @expectedExceptionMessage Something went wrong. Check your arguments.
+     * @expectedException        \Franzip\SerpPageSerializer\Exceptions\RuntimeException
+     * @expectedExceptionMessage Invalid SerpPageSerializer $serializedPage: you must supply a SerializedSerpPage object to deserialize.
      */
     public function testWrongDeserializeArgs2()
     {
@@ -121,23 +121,32 @@ class SerializerArgsTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException        InvalidArgumentException
-     * @expectedExceptionMessage Something went wrong. Check your arguments.
+     * @expectedException        \Franzip\SerpPageSerializer\Exceptions\RuntimeException
+     * @expectedExceptionMessage Invalid SerpPageSerializer $serializedPage: you must supply a SerializedSerpPage object to deserialize.
      */
     public function testWrongDeserializeArgs3()
     {
         $foo = new SerpPageSerializer('baz');
-        $foo->deserialize('', 'xml');
+        $foo->deserialize('foo', 'xml');
     }
 
     /**
      * @expectedException        \Franzip\SerpPageSerializer\Exceptions\UnsupportedDeserializationFormatException
-     * @expectedExceptionMessage Invalid SerpPageSerializer $format: supported deserialization formats are JSON and YAML.
+     * @expectedExceptionMessage Invalid SerpPageSerializer $format: supported deserialization formats are JSON and XML.
      */
     public function testWrongDeserializeArgs4()
     {
         $foo = new SerpPageSerializer('baz');
         $foo->deserialize('bar', 'yml');
+    }
+
+    /**
+     * @expectedException        \Franzip\SerpPageSerializer\Exceptions\RuntimeException
+     * @expectedExceptionMessage Cannot instantiate a SerializedSerpPage outside SerpPageSerializer.
+     */
+    public function testSerializedSerpPageInstantiation()
+    {
+        $foo = new \Franzip\SerpPageSerializer\Models\SerializedSerpPage('foo');
     }
 }
 
@@ -222,54 +231,62 @@ class SerializerTest extends PHPUnit_Framework_TestCase
     {
         $foo = new SerpPageSerializer('baz');
         $result = $foo->serialize($this->serializablePages[0], 'xml');
-        $this->assertXmlStringEqualsXmlFile('tests/data/test1.xml', $result);
+        $this->assertXmlStringEqualsXmlFile('tests/data/test1.xml', $result->getContent());
         $result = $foo->serialize($this->serializablePages[1], 'xml');
-        $this->assertXmlStringEqualsXmlFile('tests/data/test2.xml', $result);
+        $this->assertXmlStringEqualsXmlFile('tests/data/test2.xml', $result->getContent());
         $result = $foo->serialize($this->serializablePages[2], 'xml');
-        $this->assertXmlStringEqualsXmlFile('tests/data/test3.xml', $result);
+        $this->assertXmlStringEqualsXmlFile('tests/data/test3.xml', $result->getContent());
         $result = $foo->serialize($this->serializablePages[3], 'xml');
-        $this->assertXmlStringEqualsXmlFile('tests/data/test4.xml', $result);
+        $this->assertXmlStringEqualsXmlFile('tests/data/test4.xml', $result->getContent());
     }
 
     public function testJSONSerialization()
     {
         $foo = new SerpPageSerializer('baz');
         $result = $foo->serialize($this->serializablePages[0], 'json');
-        $this->assertJsonStringEqualsJsonFile('tests/data/test1.json', $result);
+        $this->assertInstanceOf('\Franzip\SerpPageSerializer\Models\SerializedSerpPage', $result);
+        $this->assertJsonStringEqualsJsonFile('tests/data/test1.json', $result->getContent());
         $result = $foo->serialize($this->serializablePages[1], 'JSON');
-        $this->assertJsonStringEqualsJsonFile('tests/data/test2.json', $result);
+        $this->assertInstanceOf('\Franzip\SerpPageSerializer\Models\SerializedSerpPage', $result);
+        $this->assertJsonStringEqualsJsonFile('tests/data/test2.json', $result->getContent());
         $result = $foo->serialize($this->serializablePages[2], 'json');
-        $this->assertJsonStringEqualsJsonFile('tests/data/test3.json', $result);
+        $this->assertInstanceOf('\Franzip\SerpPageSerializer\Models\SerializedSerpPage', $result);
+        $this->assertJsonStringEqualsJsonFile('tests/data/test3.json', $result->getContent());
         $result = $foo->serialize($this->serializablePages[3], 'json');
-        $this->assertJsonStringEqualsJsonFile('tests/data/test4.json', $result);
+        $this->assertInstanceOf('\Franzip\SerpPageSerializer\Models\SerializedSerpPage', $result);
+        $this->assertJsonStringEqualsJsonFile('tests/data/test4.json', $result->getContent());
     }
 
     public function testYAMLSerialization()
     {
         $foo = new SerpPageSerializer('baz');
         $result = $foo->serialize($this->serializablePages[0], 'yml');
-        file_put_contents('results/test1.yaml', $result);
+        $this->assertInstanceOf('\Franzip\SerpPageSerializer\Models\SerializedSerpPage', $result);
+        file_put_contents('results/test1.yaml', $result->getContent());
         $fixtureData = \Spyc::YAMLLoad('tests/data/test1.yaml');
         $resultData = \Spyc::YAMLLoad('results/test1.yaml');
         $this->assertEquals($fixtureData, $resultData);
         $result = $foo->serialize($this->serializablePages[1], 'yml');
-        file_put_contents('results/test2.yaml', $result);
+        $this->assertInstanceOf('\Franzip\SerpPageSerializer\Models\SerializedSerpPage', $result);
+        file_put_contents('results/test2.yaml', $result->getContent());
         $fixtureData = \Spyc::YAMLLoad('tests/data/test2.yaml');
         $resultData = \Spyc::YAMLLoad('results/test2.yaml');
         $this->assertEquals($fixtureData, $resultData);
         $result = $foo->serialize($this->serializablePages[2], 'yml');
-        file_put_contents('results/test3.yaml', $result);
+        $this->assertInstanceOf('\Franzip\SerpPageSerializer\Models\SerializedSerpPage', $result);
+        file_put_contents('results/test3.yaml', $result->getContent());
         $fixtureData = \Spyc::YAMLLoad('tests/data/test3.yaml');
         $resultData = \Spyc::YAMLLoad('results/test3.yaml');
         $this->assertEquals($fixtureData, $resultData);
         $result = $foo->serialize($this->serializablePages[3], 'yml');
-        file_put_contents('results/test4.yaml', $result);
+        $this->assertInstanceOf('\Franzip\SerpPageSerializer\Models\SerializedSerpPage', $result);
+        file_put_contents('results/test4.yaml', $result->getContent());
         $fixtureData = \Spyc::YAMLLoad('tests/data/test4.yaml');
         $resultData = \Spyc::YAMLLoad('results/test4.yaml');
         $this->assertEquals($fixtureData, $resultData);
     }
 
-    /*
+/*
     public function testXMLDeserialization()
     {
         $foo = new SerpPageSerializer('baz');
@@ -277,11 +294,14 @@ class SerializerTest extends PHPUnit_Framework_TestCase
                                                'Franzip\SerpPageSerializer\SerpPageSerializer');
         $prepareForSerialization = TestHelper::getMethod('prepareForSerialization',
                                                          'Franzip\SerpPageSerializer\SerpPageSerializer');
-        $data = $foo->serialize($this->serializablePages[0], 'xml');
-        $deserialized = $foo->deserialize($data, 'xml');
+        $serialized = $foo->serialize($this->serializablePages[0], 'xml');
+        $deserialized = $foo->deserialize($serialized, 'xml');
+
         $entries = $createEntries->invokeArgs($foo, array($this->serializablePages[0], 'xml'));
         $serpPageXML = $prepareForSerialization->invokeArgs($foo, array($this->serializablePages[0], 'xml', $entries));
-        $this->assertEquals($deserialized, $serpPageXML);
+        var_dump($deserialized);
+        var_dump($serpPageXML);
+        $this->assertEqualXMLStructure($deserialized, $serpPageXML);
         $data = $foo->serialize($this->serializablePages[1], 'XML');
         $deserialized = $foo->deserialize($data, 'xml');
         $entries = $createEntries->invokeArgs($foo, array($this->serializablePages[1], 'xml'));
@@ -327,5 +347,5 @@ class SerializerTest extends PHPUnit_Framework_TestCase
         $serpPageJSON = $prepareForSerialization->invokeArgs($foo, array($this->serializablePages[3], 'json', $entries));
         $this->assertEquals($deserialized, $serpPageJSON);
     }
-    */
+*/
 }

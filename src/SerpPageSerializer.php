@@ -13,6 +13,7 @@
 
 namespace Franzip\SerpPageSerializer;
 use Franzip\SerpPageSerializer\Helpers\SerpPageSerializerHelper;
+use Franzip\SerpPageSerializer\Models\SerializedSerpPage;
 use JMS\Serializer\SerializerBuilder;
 
 \Doctrine\Common\Annotations\AnnotationRegistry::registerLoader('class_exists');
@@ -68,27 +69,29 @@ class SerpPageSerializer
         $serializablePage = $this->prepareForSerialization($serializablePage, $format, $entries);
         $serializedPage   = $this->getSerializer()->serialize($serializablePage, $format);
         // beautify output if JSON
-        return ($format == 'json') ? SerpPageSerializerHelper::prettyJSON($serializedPage) : $serializedPage;
+        $content          = ($format == 'json') ? SerpPageSerializerHelper::prettyJSON($serializedPage) : $serializedPage;
+        return new SerializedSerpPage($content);
     }
 
     /**
-     * TOCHANGE
      * Deserialize a serialized page.
-     * YAML deserialization is not currently supported
-     * @param  string $serializedPage
-     * @param  string $format
-     * @return SerpPageXML|SerpPageJSON
+     * YAML deserialization is not currently supported.
+     * @param  SerializedSerpPage   $serializedPage
+     * @param  string               $format
+     * @return SerializableSerpPage
      */
     public function deserialize($serializedPage, $format)
     {
         // check if supported deserialization format
         if (!SerpPageSerializerHelper::validFormat($format, self::$supportedFormatDeserialization))
-            throw new \Franzip\SerpPageSerializer\Exceptions\UnsupportedDeserializationFormatException('Invalid SerpPageSerializer $format: supported deserialization formats are JSON and YAML.');
+            throw new \Franzip\SerpPageSerializer\Exceptions\UnsupportedDeserializationFormatException('Invalid SerpPageSerializer $format: supported deserialization formats are JSON and XML.');
         // TODO: typecheck object
-        if (!self::deserializablePage($serializedPage))
-            throw new \InvalidArgumentException('Something went wrong. Check your arguments.');
+        if (!SerpPageSerializerHelper::deserializablePage($serializedPage))
+            throw new \Franzip\SerpPageSerializer\Exceptions\RuntimeException('Invalid SerpPageSerializer $serializedPage: you must supply a SerializedSerpPage object to deserialize.');
+
+        $format = strtolower($format);
         $targetClass = self::SERIALIZABLE_OBJECT_PREFIX . strtoupper($format);
-        return $this->getSerializer()->deserialize($serializedPage, $targetClass, $format);
+        return $this->getSerializer()->deserialize($serializedPage->getContent(), $targetClass, $format);
     }
 
     /**
@@ -155,16 +158,5 @@ class SerpPageSerializer
         $className .= $formatName;
         return call_user_func_array(array(new \ReflectionClass($className), 'newInstance'),
                                     $args);
-    }
-
-    /**
-     * Basic validation for deserialization.
-     * TODO: maybe a SerializedSerpPage wrapper to allow typecheck?
-     * @param  string $page
-     * @return bool
-     */
-    private static function deserializablePage($page)
-    {
-        return is_string($page) && !empty($page);
     }
 }
