@@ -1,6 +1,6 @@
 <?php
 
-namespace Franzip\SerpPageSerializer\SerializableModels;
+namespace Franzip\SerpPageSerializer\Helpers;
 
 /**
  * Namespace SerializableSerpPage helpers methods.

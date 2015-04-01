@@ -14,7 +14,7 @@ Create a composer.json file in your project root:
 ```
 {
     "require": {
-        "franzip/serp-page-serializer": "0.1.*@dev"
+        "franzip/serp-page-serializer": "0.2.*@dev"
     }
 }
 ```
