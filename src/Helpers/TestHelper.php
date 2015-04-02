@@ -12,7 +12,7 @@ class TestHelper
      * Recursively remove nested dirs and files in $dir by default.
      * @param  string  $dir
      */
-    static public function rrmdir($dir)
+    public static function rrmdir($dir)
     {
         if (is_dir($dir)) {
             $objects = scandir($dir);
@@ -33,7 +33,7 @@ class TestHelper
      * Clean the filesystem mess created when running tests.
      * Folders to be left untouched are listed in $dontDelete.
      */
-    static public function cleanMess()
+    public static function cleanMess()
     {
         $dir = new \DirectoryIterator(dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..');
         echo $dir;
@@ -52,7 +52,7 @@ class TestHelper
      * @param  string $className
      * @return callable
      */
-    static public function getMethod($name, $className)
+    public static function getMethod($name, $className)
     {
         $class = new \ReflectionClass($className);
         $method = $class->getMethod($name);
