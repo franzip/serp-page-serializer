@@ -6,7 +6,7 @@ namespace Franzip\SerpPageSerializer\Exceptions;
  * UnsupportedSerializationFormatException for SerpPageSerializer.
  * @package SerpPageSerializer
  */
-class UnsupportedSerializationFormatException extends \InvalidArgumentException implements Exception
+class UnsupportedSerializationFormatException extends \Franzip\SerpPageSerializer\Exceptions\InvalidArgumentException implements Exception
 {
 
 }

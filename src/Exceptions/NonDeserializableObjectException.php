@@ -6,7 +6,7 @@ namespace Franzip\SerpPageSerializer\Exceptions;
  * NonDeserializableObjectException for SerpPageSerializer.
  * @package SerpPageSerializer
  */
-class NonDeserializableObjectException extends \InvalidArgumentException implements Exception
+class NonDeserializableObjectException extends \Franzip\SerpPageSerializer\Exceptions\InvalidArgumentException implements Exception
 {
 
 }
