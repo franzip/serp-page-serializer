@@ -26,15 +26,20 @@ php composer.phar install
 
 ## Constructor
 ```php
-$serpSerializer = new SerpPageSerializer($cacheDir);
+$serpSerializer = new SerpPageSerializer($cacheDir = "serializer_cache");
 ```
 
 ## Data type constraints
-The SerpPageSerializer accepts only a SerializableSerpPage object.
+
+### Serialization
+The ```SerpPageSerializer->serialize()``` method accepts only a ```SerializableSerpPage```
+object and returns a ```SerializedSerpPage``` object.
+The serialized content is available through the ```SerializedSerpPage->getContent()```
+method.
 Before using the serializer, normalize your data as follows:
 ```php
 
-use Franzip\SerpPageSerializer\SerializableModels\SerializableSerpPage;
+use Franzip\SerpPageSerializer\Models\SerializableSerpPage;
 // assuming you have extracted the data someway
 $serializableSerpPage = new SerializableSerpPage($engine, $keyword, $pageUrl,
                                                  $pageNumber, $age, $entries);
@@ -56,9 +61,9 @@ Where:
 
 Every Search Engine result page entry has a tripartite structure:
 
-1. A title, usually highlighted in blue
-2. A url
-3. A textual snippet
+1. A title, usually highlighted in blue.
+2. A url.
+3. A textual snippet.
 
 ![Typical SERP entry structure](./serp-structure.png?raw=true "Typical SERP entry structure")
 
@@ -73,13 +78,17 @@ array(
       ...
      );
 ```
+### Deserialization
+
+The ```SerpPageSerializer->deserialize()``` only accepts a ```SerializedSerpPage```
+as argument, yielding back a ```SerpPageJSON``` or a ```SerpPageXML``` object.
 
 ## Usage (serialize data)
 
 ```php
 
 use Franzip\SerpPageSerializer\SerpPageSerializer;
-use Franzip\SerpPageSerializer\SerializableModels\SerializableSerpPage;
+use Franzip\SerpPageSerializer\Models\SerializableSerpPage;
 
 $engine = 'google';
 $keyword = 'foobar';
@@ -93,69 +102,74 @@ $entries = array(array('url' => 'www.foobar2000.org',
                  array(...),
                  ...);
 
-$serpSerializer = new SerpPageSerializer('cache');
+$serpSerializer = new SerpPageSerializer();
 $pageToSerialize = new SerializableSerpPage($engine, $keyword, $pageUrl,
                                             $pageNumber, $age, $entries);
 
-$serializedXMLData = $serpSerializer->serialize(pageToSerialize, 'xml');
+$serializedXMLData = $serpSerializer->serialize(pageToSerialize->getContent(), 'xml');
 var_dump($serializedXMLData);
 
-// <?xml version="1.0" encoding="UTF-8"?>
-//   <serp_page engine="google" page_number="1" page_url="https://www.google.com/search?q=foobar" keyword="foobar" age="2015-03-19">
-//     <entry position="1">
-//       <url>www.foobar2000.org</url>
-//       <title>foobar2000</title>
-//       <snippet>blabla</snippet>
-//     </entry>
-//     <entry position="2">
-//       ...
-//     </entry>
-//   </serp_page>
-//
+/*
+ * <?xml version="1.0" encoding="UTF-8"?>
+ *  <serp_page engine="google" page_number="1" page_url="https://www.google.com/search?q=foobar" keyword="foobar" age="2015-03-19">
+ *    <entry position="1">
+ *      <url>www.foobar2000.org</url>
+ *      <title>foobar2000</title>
+ *      <snippet>blabla</snippet>
+ *    </entry>
+ *    <entry position="2">
+ *      ...
+ *    </entry>
+ *  </serp_page>
+ */
 
-$serializedJSONData = $serpSerializer->serialize(pageToSerialize, 'json');
+$serializedJSONData = $serpSerializer->serialize(pageToSerialize->getContent(), 'json');
 var_dump($serializedJSONData);
 
-// {
-//   "engine": "google",
-//   "page_number": 1,
-//   "page_url": "https:\/\/www.google.com\/search?q=foobar",
-//   "keyword":"foobar",
-//   "age":"2015-03-19",
-//   "entries":[
-//     {
-//       "position": 1,
-//       "url": "www.foobar2000.org",
-//       "title": "foobar2000",
-//       "snippet": "blabla"
-//     },
-//     {
-//       "position": 2,
-//       ...
-//     },
-//     ...
-//   ]
-// }
+/*
+ * {
+ *   "engine": "google",
+ *   "page_number": 1,
+ *   "page_url": "https:\/\/www.google.com\/search?q=foobar",
+ *   "keyword":"foobar",
+ *   "age":"2015-03-19",
+ *   "entries":[
+ *     {
+ *       "position": 1,
+ *       "url": "www.foobar2000.org",
+ *       "title": "foobar2000",
+ *       "snippet": "blabla"
+ *     },
+ *     {
+ *       "position": 2,
+ *       ...
+ *     },
+ *     ...
+ *   ]
+ * }
+ */
 
-$serializedYAMLData = $serpSerializer->serialize(pageToSerialize, 'yml');
+$serializedYAMLData = $serpSerializer->serialize(pageToSerialize->getContent(), 'yml');
 var_dump($serializedYAMLData);
 
-// engine: google
-// page_number: 1
-// page_url: 'http://www.google.com/search?q=foobar'
-// keyword: foobar
-// age: '2015-03-19'
-// entries:
-//     -
-//         position: 1
-//         url: 'www.foobar2000.org'
-//         title: foobar2000
-//         snippet: blabla
-//     -
-//         position: 2
-//         ...
-//     -
-//     ...
+/*
+ * engine: google
+ * page_number: 1
+ * page_url: 'http://www.google.com/search?q=foobar'
+ * keyword: foobar
+ * age: '2015-03-19'
+ * entries:
+ *     -
+ *         position: 1
+ *         url: 'www.foobar2000.org'
+ *         title: foobar2000
+ *         snippet: blabla
+ *     -
+ *         position: 2
+ *         ...
+ *     -
+ *
+ */ ...
 ```
 
 ## Usage (deserialize data)
@@ -166,17 +180,30 @@ YAML deserialization **is not supported.**
 
 use Franzip\SerpPageSerializer\SerpPageSerializer;
 
-$serpSerializer = new SerpPageSerializer('cache');
+$serpSerializer = new SerpPageSerializer();
+
 $serpPageXML = $serpSerializer->deserialize($serializedXMLPage, 'xml');
+
+var_dump($serializedXMLPage);
+
+// object(Franzip\SerpPageSerializer\Models\SerializedSerpPage) (1) {
+// ...
+
 var_dump($serpPageXML);
 
-// object(Franzip\SerpPageSerializer\SerializableModels\SerpPageXML) (6) {
+// object(Franzip\SerpPageSerializer\Models\SerpPageXML) (6) {
 // ...
 
 $serpPageJSON = $serpSerializer->deserialize($serializedJSONPage, 'json');
+
+var_dump($serializedJSONPage);
+
+// object(Franzip\SerpPageSerializer\Models\SerializedSerpPage) (1) {
+// ...
+
 var_dump($serpPageJSON);
 
-// object(Franzip\SerpPageSerializer\SerializableModels\SerpPageJSON) (6) {
+// object(Franzip\SerpPageSerializer\Models\SerpPageJSON) (6) {
 // ...
 
 ```
@@ -189,7 +216,7 @@ var_dump($serpPageJSON);
  a dedicated class.
 - [x] Fix serialization tests.
 - [x] Fix deserialization tests.
-- [ ] Rewrite docs.
+- [x] Rewrite docs.
 - [ ] YAML deserialization support.
 - [ ] CSV serialization/deserialization support.
 - [ ] Fix messy tests.
