@@ -106,7 +106,7 @@ $serpSerializer = new SerpPageSerializer();
 $pageToSerialize = new SerializableSerpPage($engine, $keyword, $pageUrl,
                                             $pageNumber, $age, $entries);
 
-$serializedXMLData = $serpSerializer->serialize(pageToSerialize->getContent(), 'xml');
+$serializedXMLData = $serpSerializer->serialize($pageToSerialize->getContent(), 'xml');
 var_dump($serializedXMLData);
 
 /*
@@ -123,7 +123,7 @@ var_dump($serializedXMLData);
  *  </serp_page>
  */
 
-$serializedJSONData = $serpSerializer->serialize(pageToSerialize->getContent(), 'json');
+$serializedJSONData = $serpSerializer->serialize($pageToSerialize->getContent(), 'json');
 var_dump($serializedJSONData);
 
 /*
@@ -149,7 +149,7 @@ var_dump($serializedJSONData);
  * }
  */
 
-$serializedYAMLData = $serpSerializer->serialize(pageToSerialize->getContent(), 'yml');
+$serializedYAMLData = $serpSerializer->serialize($pageToSerialize->getContent(), 'yml');
 var_dump($serializedYAMLData);
 
 /*
