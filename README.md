@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/franzip/serp-page-serializer.svg?branch=master)](https://travis-ci.org/franzip/serp-page-serializer)
+[![Coverage Status](https://coveralls.io/repos/franzip/serp-page-serializer/badge.svg)](https://coveralls.io/r/franzip/serp-page-serializer)
 
 # SerpPageSerializer
 Serialize/deserialize Search Engine Result Pages to JSON, XML and YAML (JMS/Serializer wrapper).

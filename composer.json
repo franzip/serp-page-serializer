@@ -15,7 +15,8 @@
     },
     "require-dev": {
         "phpunit/phpunit": "4.0.*",
-        "mustangostang/spyc": "0.5.*@dev"
+        "mustangostang/spyc": "0.5.*@dev",
+        "satooshi/php-coveralls": "dev-master"
     },
     "autoload": {
         "psr-4": {
