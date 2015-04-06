@@ -179,5 +179,13 @@ class SerializableSerpPageTest extends PHPUnit_Framework_TestCase
         $foo = new SerializableSerpPage('foo', 'baz', 'www.google.com', 2, $this->date,
                                          array(array('url' => 'bar', 'snippet' => 'bar', 'title' => 'foo'),
                                                array('url' => 'barfoo', 'snippet' => 'foobar', 'title' => 'baz')));
+        $this->assertEquals($foo->getEngine(), 'foo');
+        $this->assertEquals($foo->getKeyword(), 'baz');
+        $this->assertEquals($foo->getPageUrl(), 'www.google.com');
+        $this->assertEquals($foo->getPageNumber(), 2);
+        $this->assertEquals($foo->getAge(), $this->date);
+        $this->assertEquals($foo->getEntries(),
+                            array(array('url' => 'bar', 'snippet' => 'bar', 'title' => 'foo'),
+                                  array('url' => 'barfoo', 'snippet' => 'foobar', 'title' => 'baz')));
     }
 }

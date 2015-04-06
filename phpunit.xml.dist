@@ -15,6 +15,9 @@
             <exclude>
                 <directory>./vendor</directory>
                 <directory>./tests</directory>
+                <directory>./src/Exceptions</directory>
+                <directory>./src/Helpers</directory>
+                <directory>./src/Models</directory>
             </exclude>
         </whitelist>
     </filter>
