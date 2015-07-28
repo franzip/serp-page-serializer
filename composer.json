@@ -1,31 +1,31 @@
 {
-    "name": "franzip/serp-page-serializer",
-    "type": "library",
-    "description": "Serialize/deserialize Search Engine Result Pages to JSON, XML and YAML (JMS/Serializer wrapper).",
-    "license": "MIT",
-    "homepage": "http://github.com/franzip/serp-page-serializer",
-    "keywords": ["serializer", "serp", "page", "XML", "JSON", "YAML", "search-engine"],
-    "authors": [{
-        "name": "Francesco Pezzella",
-        "email": "franzpezzella@gmail.com"
-    }],
-    "require": {
-        "php": ">=5.3.3",
-        "jms/serializer": "0.17.*@dev"
-    },
-    "require-dev": {
-        "phpunit/phpunit": "4.0.*",
-        "mustangostang/spyc": "0.5.*@dev",
-        "satooshi/php-coveralls": "dev-master"
-    },
-    "autoload": {
-        "psr-4": {
-            "Franzip\\SerpPageSerializer\\": "src/"
-        }
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "0.2.x-dev"
-        }
+  "name": "franzip/serp-page-serializer",
+  "type": "library",
+  "description": "Serialize/deserialize Search Engine Result Pages to JSON, XML and YAML (JMS/Serializer wrapper).",
+  "license": "MIT",
+  "homepage": "http://github.com/franzip/serp-page-serializer",
+  "keywords": ["serializer", "serp", "page", "XML", "JSON", "YAML", "search-engine"],
+  "authors": [{
+    "name": "Francesco Pezzella",
+    "email": "franzpezzella@gmail.com"
+  }],
+  "require": {
+    "php": ">=5.3.3",
+    "jms/serializer": "1.0.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "4.0.*",
+    "mustangostang/spyc": "0.5.*@dev",
+    "satooshi/php-coveralls": "dev-master"
+  },
+  "autoload": {
+    "psr-4": {
+      "Franzip\\SerpPageSerializer\\": "src/"
     }
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "0.2.x-dev"
+    }
+  }
 }
