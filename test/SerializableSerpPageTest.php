@@ -2,15 +2,15 @@
 
 namespace Franzip\SerpPageSerializer\Models\SerializableSerpPage\Test;
 use Franzip\SerpPageSerializer\Models\SerializableSerpPage;
-use \PHPUnit_Framework_TestCase as PHPUnit_Framework_TestCase;
+use \PHPUnit\Framework\TestCase;
 
 date_default_timezone_set("Europe/Rome");
 
-class SerializableSerpPageTest extends PHPUnit_Framework_TestCase
+final class SerializableSerpPageTest extends TestCase
 {
     protected $date;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $date = new \DateTime();
         $date->setTimeStamp(time());
