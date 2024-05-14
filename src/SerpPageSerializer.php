@@ -2,7 +2,7 @@
 
 /**
  * SerpPageSerializer -- Serialize/deserialize Search Engine Result Pages to
- * JSON, XML and YAML (JMS/Serializer wrapper).
+ * JSON and XML (JMS/Serializer wrapper).
  * @version 1.0.0
  * @author Francesco Pezzella <franzpezzella@gmail.com>
  * @link https://github.com/franzip/serp-page-serializer
@@ -17,9 +17,8 @@ use Franzip\SerpPageSerializer\Models\SerializedSerpPage;
 use JMS\Serializer\SerializerBuilder;
 
 /**
- * Serialize/Deserialize Search Engine result page to XML, JSON and YAML.
+ * Serialize/Deserialize Search Engine result page to XML and JSON.
  * The SerpPageSerializer->serialize() accepts only a SerializableSerpPage as input.
- * YAML deserialization is not currently supported.
  * @package SerpPageSerializer
  */
 class SerpPageSerializer
@@ -30,9 +29,7 @@ class SerpPageSerializer
     // default cache dir
     const DEFAULT_SERIALIZER_CACHE_DIR = 'serializer_cache';
     // supported serialization/deserialization formats
-    private static $supportedFormatSerialization   = array('xml', 'json', 'yml');
-    // JMS/Serializar does not support YAML deserialization
-    private static $supportedFormatDeserialization = array('xml', 'json');
+    private static $supportedFormats   = array('xml', 'json');
     // underlying serializer instance (a JMS/Serializer object)
     private $serializer;
 
@@ -56,8 +53,8 @@ class SerpPageSerializer
     public function serialize($serializablePage, $format)
     {
         // check if supported serialization format
-        if (!SerpPageSerializerHelper::validFormat($format, self::$supportedFormatSerialization))
-            throw new \Franzip\SerpPageSerializer\Exceptions\UnsupportedSerializationFormatException('Invalid SerpPageSerializer $format: supported serialization formats are JSON, XML and YAML.');
+        if (!SerpPageSerializerHelper::validFormat($format, self::$supportedFormats))
+            throw new \Franzip\SerpPageSerializer\Exceptions\UnsupportedSerializationFormatException('Invalid SerpPageSerializer $format: supported serialization formats are JSON and XML.');
         // typecheck the object to serialize
         if (!SerpPageSerializerHelper::serializablePage($serializablePage))
             throw new \Franzip\SerpPageSerializer\Exceptions\NonSerializableObjectException('Invalid SerpPageSerializer $serializablePage: you must supply a SerializableSerpPage object to serialize.');
@@ -73,7 +70,6 @@ class SerpPageSerializer
 
     /**
      * Deserialize a serialized page.
-     * YAML deserialization is not currently supported.
      * @param  SerializedSerpPage   $serializedPage
      * @param  string               $format
      * @return SerializableSerpPage
@@ -81,7 +77,7 @@ class SerpPageSerializer
     public function deserialize($serializedPage, $format)
     {
         // check if supported deserialization format
-        if (!SerpPageSerializerHelper::validFormat($format, self::$supportedFormatDeserialization))
+        if (!SerpPageSerializerHelper::validFormat($format, self::$supportedFormats))
             throw new \Franzip\SerpPageSerializer\Exceptions\UnsupportedDeserializationFormatException('Invalid SerpPageSerializer $format: supported deserialization formats are JSON and XML.');
         // TODO: typecheck object
         if (!SerpPageSerializerHelper::deserializablePage($serializedPage))
@@ -107,7 +103,7 @@ class SerpPageSerializer
      * @param  SerializableSerpPage $serializablePage
      * @param  string               $format
      * @param  array                $entries
-     * @return SerpPageJSON|SerpPageXML|SerpPageYML
+     * @return SerpPageJSON|SerpPageXML
      */
     private function prepareForSerialization($serializablePage, $format, $entries)
     {
@@ -125,7 +121,7 @@ class SerpPageSerializer
      * The serialization format is resolved at runtime.
      * @param  SerializableSerpPage $serializablePage
      * @param  string               $format
-     * @return SerpPageEntryJSON|SerpPageEntryXML|SerpPageEntryYAML
+     * @return SerpPageEntryJSON|SerpPageEntryXML
      */
     private function createEntries($serializablePage, $format)
     {

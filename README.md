@@ -2,7 +2,7 @@
 [![Coverage Status](https://coveralls.io/repos/franzip/serp-page-serializer/badge.svg)](https://coveralls.io/r/franzip/serp-page-serializer)
 
 # SerpPageSerializer
-Serialize/deserialize Search Engine Result Pages to JSON, XML and YAML (JMS/Serializer wrapper).
+Serialize/deserialize Search Engine Result Pages to JSON and XML (JMS/Serializer wrapper).
 
 ## Installing via Composer (recommended)
 
@@ -150,32 +150,9 @@ var_dump($serializedJSONData);
  * }
  */
 
-$serializedYAMLData = $serpSerializer->serialize($pageToSerialize->getContent(), 'yml');
-var_dump($serializedYAMLData);
-
-/*
- * engine: google
- * page_number: 1
- * page_url: 'http://www.google.com/search?q=foobar'
- * keyword: foobar
- * age: '2015-03-19'
- * entries:
- *     -
- *         position: 1
- *         url: 'www.foobar2000.org'
- *         title: foobar2000
- *         snippet: blabla
- *     -
- *         position: 2
- *         ...
- *     -
- *
- */ ...
 ```
 
 ## Usage (deserialize data)
-
-YAML deserialization **is not supported.**
 
 ```php
 
@@ -218,7 +195,6 @@ var_dump($serpPageJSON);
 - [x] Fix serialization tests.
 - [x] Fix deserialization tests.
 - [x] Rewrite docs.
-- [ ] YAML deserialization support.
 - [ ] CSV serialization/deserialization support.
 - [ ] Fix messy tests.
 

@@ -1,10 +1,10 @@
 {
   "name": "franzip/serp-page-serializer",
   "type": "library",
-  "description": "Serialize/deserialize Search Engine Result Pages to JSON, XML and YAML (JMS/Serializer wrapper).",
+  "description": "Serialize/deserialize Search Engine Result Pages to JSON and XML (JMS/Serializer wrapper).",
   "license": "MIT",
   "homepage": "http://github.com/franzip/serp-page-serializer",
-  "keywords": ["serializer", "serp", "page", "XML", "JSON", "YAML", "search-engine"],
+  "keywords": ["serializer", "serp", "page", "XML", "JSON", "search-engine"],
   "authors": [{
     "name": "Francesco Pezzella",
     "email": "franzpezzella@gmail.com"

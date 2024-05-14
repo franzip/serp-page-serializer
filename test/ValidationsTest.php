@@ -47,7 +47,7 @@ final class ValidationsTest extends TestCase
     public function testWrongSerializeArgs()
     {
         $this->expectException(\Franzip\SerpPageSerializer\Exceptions\UnsupportedSerializationFormatException::class);
-        $this->expectExceptionMessage("Invalid SerpPageSerializer \$format: supported serialization formats are JSON, XML and YAML.");
+        $this->expectExceptionMessage("Invalid SerpPageSerializer \$format: supported serialization formats are JSON and XML.");
         $foo = new SerpPageSerializer('baz');
         $foo->serialize($this->serializablePage, 'baz');
     }
@@ -55,7 +55,7 @@ final class ValidationsTest extends TestCase
     public function testWrongSerializeArgs1()
     {
         $this->expectException(\Franzip\SerpPageSerializer\Exceptions\UnsupportedSerializationFormatException::class);
-        $this->expectExceptionMessage("Invalid SerpPageSerializer \$format: supported serialization formats are JSON, XML and YAML.");
+        $this->expectExceptionMessage("Invalid SerpPageSerializer \$format: supported serialization formats are JSON and XML.");
         $foo = new SerpPageSerializer('baz');
         $foo->serialize($this->serializablePage, 'baz');
     }

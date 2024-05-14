@@ -115,33 +115,4 @@ final class SerializationTest extends TestCase
         $this->assertInstanceOf('\Franzip\SerpPageSerializer\Models\SerializedSerpPage', $result);
         $this->assertJsonStringEqualsJsonFile('test/data/test4.json', $result->getContent());
     }
-
-    public function testYAMLSerialization()
-    {
-        $foo = new SerpPageSerializer('baz');
-        $result = $foo->serialize($this->serializablePages[0], 'yml');
-        $this->assertInstanceOf('\Franzip\SerpPageSerializer\Models\SerializedSerpPage', $result);
-        file_put_contents('results/test1.yaml', $result->getContent());
-        $fixtureData = \Spyc::YAMLLoad('test/data/test1.yaml');
-        $resultData = \Spyc::YAMLLoad('results/test1.yaml');
-        $this->assertEquals($fixtureData, $resultData);
-        $result = $foo->serialize($this->serializablePages[1], 'yml');
-        $this->assertInstanceOf('\Franzip\SerpPageSerializer\Models\SerializedSerpPage', $result);
-        file_put_contents('results/test2.yaml', $result->getContent());
-        $fixtureData = \Spyc::YAMLLoad('test/data/test2.yaml');
-        $resultData = \Spyc::YAMLLoad('results/test2.yaml');
-        $this->assertEquals($fixtureData, $resultData);
-        $result = $foo->serialize($this->serializablePages[2], 'yml');
-        $this->assertInstanceOf('\Franzip\SerpPageSerializer\Models\SerializedSerpPage', $result);
-        file_put_contents('results/test3.yaml', $result->getContent());
-        $fixtureData = \Spyc::YAMLLoad('test/data/test3.yaml');
-        $resultData = \Spyc::YAMLLoad('results/test3.yaml');
-        $this->assertEquals($fixtureData, $resultData);
-        $result = $foo->serialize($this->serializablePages[3], 'yml');
-        $this->assertInstanceOf('\Franzip\SerpPageSerializer\Models\SerializedSerpPage', $result);
-        file_put_contents('results/test4.yaml', $result->getContent());
-        $fixtureData = \Spyc::YAMLLoad('test/data/test4.yaml');
-        $resultData = \Spyc::YAMLLoad('results/test4.yaml');
-        $this->assertEquals($fixtureData, $resultData);
-    }
 }
