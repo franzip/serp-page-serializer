@@ -37,7 +37,7 @@ class TestHelper
     {
         $dir = new \DirectoryIterator(dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..');
         echo $dir;
-        $dontDelete = array('tests', 'src', 'vendor', '.git', 'data');
+        $dontDelete = array('test', 'src', 'vendor', '.git', 'data');
         foreach ($dir as $fileinfo) {
             if ($fileinfo->isDir() && !$fileinfo->isDot()
                 && !in_array($fileinfo->getFileName(), $dontDelete)) {

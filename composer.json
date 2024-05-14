@@ -11,6 +11,7 @@
   }],
   "require": {
     "php": ">=8.0.0",
+    "doctrine/annotations": "2.x.*",
     "jms/serializer": "3.x.*"
   },
   "require-dev": {
