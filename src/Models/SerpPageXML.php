@@ -2,8 +2,8 @@
 
 /**
  * SerpPageSerializer -- Serialize/deserialize Search Engine Result Pages to
- * JSON, XML and YAML (JMS/Serializer wrapper).
- * @version 0.2.0
+ * JSON and XML (JMS/Serializer wrapper).
+ * @version 1.0.0
  * @author Francesco Pezzella <franzpezzella@gmail.com>
  * @link https://github.com/franzip/serp-page-serializer
  * @copyright Copyright 2015 Francesco Pezzella
